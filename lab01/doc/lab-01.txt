@@ -1,0 +1,103 @@
+Науменко Андрій\КІТ 321-а
+Лабораторна робота №1. Вступ до програмування.Освоєння командної строки Linux.
+Хід роботи:
+1.Завантажив програму VirtualBox з сайту: https://www.virtualbox.org/;
+2.Завантажив образ Kali Linux з сайту: https://www.kali.org/get-kali/;
+3.В програмі VirtualBox я створив нову віртуальну машину задавши назву "kali" та вказавши тип: linux, версію: Debian (64-bit);
+4.Налаштував опраційну систему під характеристики мого ноутбука та вказав шлях завантаженого образу Kali Linux;
+5.Після успішної інсталяції, через термінал командою: "sudo apt-get update;– sudo apt-get upgrade;– sudo reboot;" я оновив компоненти системи до актуальних;
+6.Встановив мінімально-необхідні пакети: git,gcc,clang,clang-format,clang-tidy,tree,make,cppcheck;
+Пакети були інстальовані за допомогою пакетного менеджера apt-get. В терміналі було введено команду : sudo apt-get install git, gcc, clang, clang-format, clang-tidy, tree, make, cppcheck;
+7.За допомогою системи контролю версіями git та команди git clone виконав клонування репозиторія.В терміналі було введено команду : git clone https://github.com/davydov-vyacheslav/sample_project.git;
+8.Ознайомився з утилітою tree; За допомогою утиліти tree було виведено на екран структуру каталогів проєкту:
+├── lab00
+		│   ├── doc
+		│   │   ├── assets
+		│   │   │   ├── algorithm-generateAnimal.png
+		│   │   │   ├── algorithm-main.png
+		│   │   │   ├── algorithm-showAnimals.png
+		│   │   │   ├── animal-fields.png
+		│   │   │   └── lab00.drawio
+		│   │   ├── lab00.docx
+		│   │   ├── lab00.md
+		│   │   └── lab00.pdf
+		│   ├── Doxyfile
+		│   ├── Makefile
+		│   ├── README.md
+		│   ├── src
+		│   │   ├── lib.c
+		│   │   ├── lib.h
+		│   │   └── main.c
+		│   └── test
+		│       └── test.c
+		├── lab03-sample
+		│   └── doc
+		│       └── lab03.txt
+                             └── README.md
+
+9.Перейшов до склонованого каталогу, де знаходиться Makefile. Вводячи команду:(make clean prep compile check) зібрав проект, впевнився, що помилок немає:
+
+Platform:Native
+1/3 files checked 19% done
+Checking src/main.c ...
+Defines:
+Undefines:
+Includes:
+Platform:Native
+2/3 files checked 47% done
+Checking test/test.c ...
+Defines:
+Undefines:
+Includes:
+Platform:Native
+3/3 files checked 100% done
+rm -rf src/*.dump test/*.dump
+ 
+10.Вніс зміни до проекту, перейшовши в каталог dist та через команду nano lib.h змінив кількість в #define ANIMAL_COUNT з 10 на 9. (компіляція виконалася без помилок);
+11.За дпопомогою команди nano Makefile вказав зміни,додаючи ціль all:
+all: clean prep compile check;
+12. Змінив Makefile так щоб папка test.bin не створювалася;
+13.Перекомпілював проект (командою make clean prep compile check) та продемонстрував зміни, що помітні при виведенні командою: git diff
+git diff                                                      
+diff --git a/lab00/Makefile b/lab00/Makefile
+index 9f17b87..f0fb47a 100644
+--- a/lab00/Makefile
++++ b/lab00/Makefile
+@@ -7,7 +7,7 @@ clean:
+        rm -rf dist
+ prep:
+        mkdir dist
+-compile: main.bin test.bin
++compile: main.bin
+ 
+ main.bin: src/main.c
+        $(CC) $(C_OPTS) $< -o ./dist/$@
+@@ -30,3 +30,4 @@ check:
+ leak-check: clean prep compile
+        valgrind $(V_FLAGS) --log-file=dist/valgrind.log --xml-file=dist/valgrind.xml --xml=yes dist/main.bin
+        valgrind $(V_FLAGS) --log-file=dist/valgrind.log --xml-file=dist/valgrind.xml --xml=yes dist/test.bin
++all: make clean prep compile check
+diff --git a/lab00/src/lib.h b/lab00/src/lib.h
+index 0fe857b..4e4c567 100644
+--- a/lab00/src/lib.h
++++ b/lab00/src/lib.h
+@@ -19,7 +19,7 @@
+ /**
+  * Кількість тварин у масиві
+  */
+-#define ANIMAL_COUNT 10
++#define ANIMAL_COUNT 9
+
+14.Визначив поточну версію утиліти clang та make (за допомогою clang --version та make --version)
+┌──(kali㉿kali)-[~]
+└─$ clang --version               
+Debian clang version 11.1.0-4
+
+(kali㉿kali)-[~]
+└─$ make --version
+GNU Make 4.3
+
+16.Ознайомився з утилітою man. Man - доступ до системних довідкових сторінок. man – це пейджер довідкових сторінок системи. Кожен параметр сторінка, надісланий man, зазвичай є назвою програми, утиліти або функції. По кожному з цих параметрів виконується пошук та виведення пов'язаної з ним сторінки фону. Якщо вказано параметр розділ, це змушує man виконувати пошук лише у цьому довідковому розділі. За замовчуванням є пошук у всіх доступних розділах в заздалегідь визначеному порядку
+
+Висновок: в ході цієї лабораторної роботи, я встановив VirtualBox та Kali Linux Os. Також були встановлені та оновлені необхідні програмні пакети. Були здобуті навички роботи з деякими утилілітами та командною строкою в терміналі Linux.
+04.11.2021
