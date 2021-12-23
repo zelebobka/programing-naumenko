@@ -1,0 +1,58 @@
+Основна частина:
+1)створив число-змінну number.
+2) почав по одному знаходити окремі числа,
+за допомогою поділу із залишком.
+3)після створив змінну r (result) яка позначає
+суму всіх окремих чисел числа.
+4) Очікуваний  результат 11, скомпілював та запустив:
+Код програми:
+int main(){
+int number = 5461;
+int a = 0;
+int b = 0;
+int c = 0;
+int d = 0;
+a = number % 10;
+b = number / 10 % 10;
+c = number / 100 % 10;
+d = number / 1000 % 10;
+int r = a + b + c + d;
+
+return 0;
+}
+──(kali㉿kali)-[~/programing-naumenko/lab03/src]
+└─$ lldb main.bin
+(lldb) target create "main.bin"
+Current executable set to '/home/kali/programing-naumenko/lab03/src/main.bin' (x86_64).
+(lldb) l 1
+   1    int main(){
+   2    int number = 5461;
+   3    int a = 0;
+   4    int b = 0;
+   5    int c = 0;
+   6    int d = 0;
+   7    a = number % 10;
+   8    b = number / 10 % 10;
+   9    c = number / 100 % 10;
+   10   d = number / 1000 % 10;
+(lldb) l
+   11   int r = a + b + c + d;
+   12  
+   13   return 0;
+   14   }
+(lldb) b 13
+Breakpoint 1: where = main.bin`main + 137 at main.c:13:1, address = 0x0000000000401199
+(lldb) r
+Process 57333 launched: '/home/kali/programing-naumenko/lab03/src/main.bin' (x86_64)
+Process 57333 stopped
+* thread #1, name = 'main.bin', stop reason = breakpoint 1.1
+    frame #0: 0x0000000000401199 main.bin`main at main.c:13:1
+   10   d = number / 1000 % 10;
+   11   int r = a + b + c + d;
+   12  
+-> 13   return 0;
+   14   }
+(lldb) p r
+(int) $0 = 16
+Результат співпадає з очікуваним, програма працює справно
+Висновок:  в ході лабораторної роботи, я ознайомився з оператором ділення с залишком та навчився писати базові лінійні програми в середовищі C
